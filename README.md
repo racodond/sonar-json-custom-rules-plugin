@@ -1,7 +1,7 @@
 Sample plugin that defines SonarQube custom rules for JSON files
 ====================
 
-[![Build Status](https://api.travis-ci.org/racodond/sonar-json-custom-rules-plugin.svg)](https://travis-ci.org/racodond/sonar-json-custom-rules-plugin)
+[![Build Status](https://api.travis-ci.org/racodond/sonar-json-custom-rules-plugin.svg?branch=master)](https://travis-ci.org/racodond/sonar-json-custom-rules-plugin)
 [![Quality Gate](https://sonarqube.com/api/badges/gate?key=org.sonar.sonar-plugins:sonar-json-custom-rules-plugin)](https://nemo.sonarqube.org/overview?id=org.sonar.sonar-plugins%3Asonar-json-custom-rules-plugin)
 
 ## Description
