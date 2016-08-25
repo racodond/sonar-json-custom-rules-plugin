@@ -26,7 +26,7 @@ This sample plugin is designed to help you get started writing your own plugin a
   * Add the [dependency](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/pom.xml#L71) to the JSON plugin
   * Add the following property to the [`sonar-packaging-maven-plugin` configuration](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/pom.xml#L105):
  ```
- <basePlugin>json</basePlugin>
+ <basePlugin>JSON</basePlugin>
  ```
 * Implement the following extension points:
   * [Plugin](http://javadocs.sonarsource.org/latest/apidocs/index.html?org/sonar/api/Plugin.html) as in [`MyJSONCustomRulesPlugin.java`](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/src/main/java/org/sonar/json/MyJSONCustomRulesPlugin.java)
