@@ -22,22 +22,22 @@ This sample plugin is designed to help you get started writing your own plugin a
 
 ### Creating a SonarQube Plugin
 * Create a [standard SonarQube plugin](http://docs.sonarqube.org/display/DEV/Build+Plugin) from scratch or start from this sample plugin
-* Attach this plugin to the SonarQube JSON plugin through the [POM](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/pom.xml):
-  * Add the [dependency](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/pom.xml#L71) to the JSON plugin
-  * Add the following property to the [`sonar-packaging-maven-plugin` configuration](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/pom.xml#L105):
+* Attach this plugin to the SonarQube JSON plugin through the [POM](pom.xml):
+  * Add the [dependency](pom.xml#L71) to the JSON plugin
+  * Add the following property to the [`sonar-packaging-maven-plugin` configuration](pom.xml#L105):
  ```
  <basePlugin>JSON</basePlugin>
  ```
 * Implement the following extension points:
-  * [Plugin](http://javadocs.sonarsource.org/latest/apidocs/index.html?org/sonar/api/Plugin.html) as in [`MyJSONCustomRulesPlugin.java`](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/src/main/java/org/sonar/json/MyJSONCustomRulesPlugin.java)
-  * [RulesDefinition](http://javadocs.sonarsource.org/latest/apidocs/index.html?org/sonar/api/server/rule/RulesDefinition.html) as in [`MyJSONCustomRulesDefinition.java`](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/src/main/java/org/sonar/json/MyJSONCustomRulesDefinition.java)
-* Declare the [`RulesDefinition` implementation as an extension in the `Plugin` extension point](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/src/main/java/org/sonar/json/MyJSONCustomRulesPlugin.java#L34).
+  * [Plugin](http://javadocs.sonarsource.org/latest/apidocs/index.html?org/sonar/api/Plugin.html) as in [`MyJSONCustomRulesPlugin.java`](src/main/java/org/sonar/json/MyJSONCustomRulesPlugin.java)
+  * [RulesDefinition](http://javadocs.sonarsource.org/latest/apidocs/index.html?org/sonar/api/server/rule/RulesDefinition.html) as in [`MyJSONCustomRulesDefinition.java`](src/main/java/org/sonar/json/MyJSONCustomRulesDefinition.java)
+* Declare the [`RulesDefinition` implementation as an extension in the `Plugin` extension point](src/main/java/org/sonar/json/MyJSONCustomRulesPlugin.java#L34).
 
 ### Implementing a Rule
 * Create a class to define the implementation of a rule. It should:
   * Either extend [`SubscriptionVisitorCheck`](https://github.com/racodond/sonar-json-plugin/blob/master/json-frontend/src/main/java/org/sonar/plugins/json/api/visitors/SubscriptionVisitorCheck.java) or [`DoubleDispatchVisitorCheck`](https://github.com/racodond/sonar-json-plugin/blob/master/json-frontend/src/main/java/org/sonar/plugins/json/api/visitors/DoubleDispatchVisitorCheck.java).
-  * Define the [rule's attributes](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/src/main/java/org/sonar/json/checks/ForbiddenKeysCheck.java#L32): key, name, priority, etc.
-* Declare this class in the [class implementing `RulesDefinition`](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/src/main/java/org/sonar/json/MyJSONCustomRulesDefinition.java#L51)
+  * Define the [rule's attributes](src/main/java/org/sonar/json/checks/ForbiddenKeysCheck.java#L32): key, name, priority, etc.
+* Declare this class in the [class implementing `RulesDefinition`](src/main/java/org/sonar/json/MyJSONCustomRulesDefinition.java#L51)
 
 There are two different ways to browse the AST:
 
@@ -45,13 +45,13 @@ There are two different ways to browse the AST:
 To explore part of the AST, override a method from [`DoubleDispactchVisitor`](https://github.com/racodond/sonar-json-plugin/blob/master/json-frontend/src/main/java/org/sonar/plugins/json/api/visitors/DoubleDispatchVisitor.java).
 For instance, if you want to explore key nodes, override [`DoubleDispactchVisitor#visitKey`](https://github.com/racodond/sonar-json-plugin/blob/master/json-frontend/src/main/java/org/sonar/plugins/json/api/visitors/DoubleDispatchVisitor.java#L78). This method is called each time a key node is encountered in the AST.
 Note: When overriding a visit method, you must call the super method in order to allow the visitor to visit the children of the node.
-See [`ForbiddenKeysCheck`](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/src/main/java/org/sonar/json/checks/ForbiddenKeysCheck.java) for example.
+See [`ForbiddenKeysCheck`](src/main/java/org/sonar/json/checks/ForbiddenKeysCheck.java) for example.
 
 
 #### Using SubscriptionVisitorCheck
 To explore part of the AST, override [`SubscriptionVisitor#nodesToVisit`](https://github.com/racodond/sonar-json-plugin/blob/master/json-frontend/src/main/java/org/sonar/plugins/json/api/visitors/SubscriptionVisitor.java#L36) by returning the list of [`Tree#Kind`](https://github.com/racodond/sonar-json-plugin/blob/master/json-frontend/src/main/java/org/sonar/plugins/json/api/tree/Tree.java#L31) nodes you want to visit.
 For instance, if you want to explore key nodes the method should return a list containing [`Tree#Kind#KEY`](https://github.com/racodond/sonar-json-plugin/blob/master/json-frontend/src/main/java/org/sonar/plugins/json/api/tree/Tree.java#L38).
-See [`ForbiddenStringCheck`](https://github.com/racodond/sonar-json-custom-rules-plugin/blob/master/src/main/java/org/sonar/json/checks/ForbiddenStringCheck.java) for example.
+See [`ForbiddenStringCheck`](src/main/java/org/sonar/json/checks/ForbiddenStringCheck.java) for example.
 
 #### Creating Issues
 Precise issue or file issue or line issue can be created by calling the related method in [Issues](https://github.com/racodond/sonar-json-plugin/blob/master/json-frontend/src/main/java/org/sonar/json/visitors/Issues.java).
